@@ -1,0 +1,13 @@
+F:\test\WorkBench\WorkBench\obj\Debug\WorkBench.csprojAssemblyReference.cache
+F:\test\WorkBench\WorkBench\obj\Debug\WorkBench.Form1.resources
+F:\test\WorkBench\WorkBench\obj\Debug\WorkBench.Properties.Resources.resources
+F:\test\WorkBench\WorkBench\obj\Debug\WorkBench.csproj.GenerateResource.cache
+F:\test\WorkBench\WorkBench\obj\Debug\WorkBench.csproj.CoreCompileInputs.cache
+F:\test\WorkBench\WorkBench\bin\Debug\WorkBench.exe.config
+F:\test\WorkBench\WorkBench\bin\Debug\WorkBench.exe
+F:\test\WorkBench\WorkBench\bin\Debug\WorkBench.pdb
+F:\test\WorkBench\WorkBench\obj\Debug\WorkBench.csproj.CopyComplete
+F:\test\WorkBench\WorkBench\obj\Debug\WorkBench.exe
+F:\test\WorkBench\WorkBench\obj\Debug\WorkBench.pdb
+F:\test\WorkBench\WorkBench\bin\Debug\Gma.UserActivityMonitor.dll
+F:\test\WorkBench\WorkBench\bin\Debug\Gma.UserActivityMonitor.pdb
