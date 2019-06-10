@@ -1,0 +1,11 @@
+{
+	app:[],
+	su:[],
+	bo:[],
+	defalut:{
+		app:"fi",
+		su:"gl",
+		bo:""
+	}
+
+}

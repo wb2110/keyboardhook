@@ -1,0 +1,14 @@
+C:\Users\wangbo03\Desktop\GlobalHook\Gma.UserActivityMonitor\bin\Debug\Gma.xml
+C:\Users\wangbo03\Desktop\GlobalHook\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.dll
+C:\Users\wangbo03\Desktop\GlobalHook\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.pdb
+C:\Users\wangbo03\Desktop\GlobalHook\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csprojAssemblyReference.cache
+C:\Users\wangbo03\Desktop\GlobalHook\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csproj.CoreCompileInputs.cache
+C:\Users\wangbo03\Desktop\GlobalHook\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
+C:\Users\wangbo03\Desktop\GlobalHook\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb
+F:\test\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.xml
+F:\test\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.dll
+F:\test\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.pdb
+F:\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csprojAssemblyReference.cache
+F:\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csproj.CoreCompileInputs.cache
+F:\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
+F:\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb
