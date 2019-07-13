@@ -387,8 +387,9 @@ namespace Gma.UserActivityMonitor
                 s_KeyboardHookHandle = SetWindowsHookEx(
                     WH_KEYBOARD_LL,
                     s_KeyboardDelegate,
-                    Marshal.GetHINSTANCE(
-                        Assembly.GetExecutingAssembly().GetModules()[0]),
+                    //Marshal.GetHINSTANCE(
+                    //    Assembly.GetExecutingAssembly().GetModules()[0]),
+                    IntPtr.Zero,
                     0);
                 //If SetWindowsHookEx fails.
                 if (s_KeyboardHookHandle == 0)

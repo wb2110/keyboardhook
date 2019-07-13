@@ -12,3 +12,10 @@ F:\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.cspr
 F:\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csproj.CoreCompileInputs.cache
 F:\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
 F:\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.xml
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.dll
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.pdb
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csprojAssemblyReference.cache
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csproj.CoreCompileInputs.cache
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb

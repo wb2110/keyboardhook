@@ -1,0 +1,4 @@
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\bin\Release\Gma.UserActivityMonitor.dll
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Release\Gma.UserActivityMonitor.csprojAssemblyReference.cache
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Release\Gma.UserActivityMonitor.csproj.CoreCompileInputs.cache
+F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Release\Gma.UserActivityMonitor.dll
