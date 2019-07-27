@@ -1,4 +1,5 @@
 ﻿using Gma.UserActivityMonitor;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Windows.Forms;
 using WorkBench.Properties;
 
@@ -52,6 +54,11 @@ namespace WorkBench
             config[nodeName] = node;
             File.WriteAllText(filePath, config.ToString());
         }
+        private JToken LoadNode(string nodeName)
+        {
+            JObject config = JObject.Parse(File.ReadAllText(filePath));
+            return config[nodeName];
+        }
         private JToken GetDefaultConfig()
         {
             env = new CloudEnv();
@@ -86,6 +93,7 @@ namespace WorkBench
                 env.dbHost = tb_host.Text;
             }
             env.dbName = tb_dbName.Text;
+            env.dbPort = tb_dbPort.Text;
             env.dbUserName = tb_username.Text;
             env.dbPassword = tb_password.Text;
             if (env.envPath != tb_EnvPath.Text)
@@ -95,7 +103,7 @@ namespace WorkBench
             }
            
             RegisterDataBase();
-            SaveNode(ConfNode.Env, JToken.FromObject(env));
+          
         }
 
         private void AddDBList()
@@ -110,7 +118,7 @@ namespace WorkBench
                 return;
             }
             var dbList = config[ConfNode.DBList].ToObject<List<CloudEnv>>();
-            var find = dbList.Find(x => x.dbHost == env.dbHost && x.dbType == env.dbType && x.dbPort == env.dbPort);
+            var find = dbList.Find(x => x.dbHost == env.dbHost && x.dbType == env.dbType && x.dbPort == env.dbPort && x.dbName == env.dbName);
             if (find == null)
             {
                 var arr = config[ConfNode.DBList] as JArray;
@@ -139,6 +147,7 @@ namespace WorkBench
                 {
                    if (lastLine.Contains("注册成功"))
                    {
+                        SaveNode(ConfNode.Env, JToken.FromObject(env));
                         AddDBList();
                     }
                     AppendTextBoxText(tb_output, e.Data);
@@ -169,11 +178,13 @@ namespace WorkBench
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            CmdExecutor.Execute("taskkill", "/f /im dotnet.exe");
-            var workDir = env.envPath;
-            var cmd = workDir + @"\startup-win.cmd";
-            var cmdExe = new CmdExecutor(cmd, workDir,"");
-            cmdExe.Execute(true);
+            CmdExecutor.Execute("taskkill", "/f /im dotnet.exe",false,new EventHandler((s,ev)=> {
+                var workDir = env.envPath;
+                var cmd = workDir + @"\startup-win.cmd";
+                var cmdExe = new CmdExecutor(cmd, workDir, "");
+                cmdExe.Execute(true);
+            }));
+            
         }
 
         private void Button5_Click(object sender, EventArgs e)
@@ -214,21 +225,26 @@ namespace WorkBench
             {
                 FileAttributes attr = File.GetAttributes(tb_clipBoard.Text);
 
+                var env = GetUIValue();
                 var workDir = env.envPath + @"\tools\projectdeploy\";
                 var cmd = workDir + "projectdeploy-win.cmd";
                 var cmdexecutor = new CmdExecutor(cmd, workDir, "");
                 string lastLine;
-                cmdexecutor.Execute(new string[] { tb_clipBoard.Text, env.envPath, env.dbType.GetTypeCode().ToString()
-                                                    , env.dbHost,env.dbPort, env.dbName, env.dbUserName, env.dbPassword, "n" }, (sender1, e1) => {
-                    lastLine = e1.Data;
-                    if (e1.Data != null)
-                    {
-                          Console.WriteLine(e1.Data);
-                    }
+                cmdexecutor.Execute(new string[] { tb_clipBoard.Text, env.envPath, ((int)env.dbType).ToString()
+                                                    , env.dbHost,env.dbPort, env.dbName, env.dbUserName, env.dbPassword, "n" }, (sender1, e1) =>
+                                                    {
+                                                        lastLine = e1.Data;
+                                                        if (e1.Data != null)
+                                                        {
+                                                            AppendTextBoxText(tb_output, e1.Data);
+                                                            AppendTextBoxText(tb_output, "\n");
+                                                        }
 
-                }, (sender1, e1) => {
-
-                });
+                                                    }, (sender1, e1) =>
+                                                    {
+                                                        AppendTextBoxText(tb_output, "部署结束");
+                                                    });
+                ;
             }
             catch(Exception ex)
             {
@@ -241,6 +257,7 @@ namespace WorkBench
             try
             {
                 FileAttributes attr = File.GetAttributes(tb_clipBoard.Text);
+                var env = GetUIValue();
 
                 var workDir = env.envPath + @"\tools\dbotool\";
                 var cmd = workDir + "dbodeploy-win.cmd";
@@ -294,6 +311,8 @@ namespace WorkBench
             {
                 FileAttributes attr = File.GetAttributes(tb_clipBoard.Text);
 
+                var env = GetUIValue();
+
                 var workDir = env.envPath + @"\tools\dataimport\";
                 var cmd = workDir + "dataimport-win.cmd";
                 var cmdexecutor = new CmdExecutor(cmd, workDir, "");
@@ -316,6 +335,298 @@ namespace WorkBench
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Button12_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"C:\Users\wangbo03\AppData\Roaming\npm");
+        }
+
+        private void Button11_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"E:\projects");
+        }
+        /// <summary>
+        /// 快速部署
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button10_Click(object sender, EventArgs e)
+        {
+            AppendTextBoxText(tb_output, "正在关闭服务\n");
+            CmdExecutor.Execute("taskkill", "/f /im dotnet.exe", false, new EventHandler((s, ev) => {
+                AppendTextBoxText(tb_output, "服务已关闭\n");
+                Thread.Sleep(1000);
+                var path = tb_clipBoard.Text;
+                var pathList = new List<string>();
+                GetAllAppFolder(pathList, path);
+                foreach (var item in pathList)
+                {
+                    AppendTextBoxText(tb_output, "正在部署:" + item);
+                    AppendTextBoxText(tb_output, "\n");
+                    DirectoryCopy(item, env.envPath + @"\apps", true);
+                }
+                AppendTextBoxText(tb_output, "部署完成");
+
+                var workDir = env.envPath;
+                var cmd = workDir + @"\startup-win.cmd";
+                var cmdExe = new CmdExecutor(cmd, workDir, "");
+                cmdExe.Execute(true);
+            }));
+            
+        }
+        private void GetAllAppFolder(List<string> paths,string path)
+        {
+            foreach (var item in Directory.GetDirectories(path))
+            {
+                if (item.Contains("apps"))
+                {
+                    paths.Add(item);
+                    continue;
+                }
+                GetAllAppFolder(paths, item);
+            }
+        }
+        private void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        {
+            // Get the subdirectories for the specified directory.
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: "
+                    + sourceDirName);
+            }
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            // If the destination directory doesn't exist, create it.
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destDirName, file.Name);
+                if (File.Exists(temppath))
+                {
+                    var fileInfo = new FileInfo(temppath);
+                    if (fileInfo.CreationTime > file.CreationTime)
+                    {
+                        continue;
+                    }
+                }
+                file.CopyTo(temppath, true);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location.
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string temppath = Path.Combine(destDirName, subdir.Name);
+                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+                }
+            }
+        }
+
+        private void Btn_compare_Click(object sender, EventArgs e)
+        {
+            var tempPath = Path.GetTempPath();
+            var left = Path.Combine(tempPath, "左侧.txt");
+            var right = Path.Combine(tempPath, "右侧.txt");
+
+            var ltxt = tb_left.Text;
+            var rtxt = tb_right.Text;
+
+            Btn_fmtLeft_Click(null, null);
+            Btn_fmtRight_Click(null, null);
+
+            File.WriteAllText(left, tb_left.Text);
+            File.WriteAllText(right, tb_right.Text);
+            CmdExecutor.Execute(@"D:\Program Files\Beyond Compare 4\BCompare.exe", " " + left + " " + right + " ", true);
+        }
+
+        private void Btn_fmtLeft_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var ltxt = tb_left.Text;
+                JToken token = JToken.Parse(ltxt);
+
+                var outtxt = string.Empty;
+                if (token.Type == JTokenType.String)
+                {
+                    try
+                    {
+                        JObject json = JObject.Parse((string)token);
+                        outtxt = json.ToString(Formatting.Indented);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                else
+                {
+                    outtxt = token.ToString(Formatting.Indented);
+                }
+                tb_left.Text = outtxt;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+           
+        }
+
+        private void Btn_fmtRight_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var ltxt = tb_right.Text;
+                JToken token = JToken.Parse(ltxt);
+
+                var outtxt = string.Empty;
+                if (token.Type == JTokenType.String)
+                {
+                    try
+                    {
+                        JObject json = JObject.Parse((string)token);
+                        outtxt = json.ToString(Formatting.Indented);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                else
+                {
+                    outtxt = token.ToString(Formatting.Indented);
+                }
+                tb_right.Text = outtxt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Button14_Click(object sender, EventArgs e)
+        {
+            var dbList = LoadNode(ConfNode.DBList) as JArray;
+
+            var confList =dbList.ToObject<List<CloudEnv>>().Cast<CloudEnv>();
+            var cb_dbType = groupBox1.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+            var dbType = GetDBTypeByName(cb_dbType.Text);
+
+            var cb_dbHost = grp_host.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+            var dbHost = GetDBHostByName(cb_dbHost.Text);
+
+            var list = from x in confList
+                       where x.dbHost == dbHost && x.dbPort == tb_dbPort.Text && x.dbType == dbType
+                       orderby x.dbName
+                       select x as CloudEnv;
+            var linked = new LinkedList<CloudEnv>(list);
+
+            try
+            {
+                var current = linked.First(x => x.dbName == tb_dbName.Text);
+                var next = linked.Find(current).Next;
+                tb_dbName.Text = next.Value.dbName;
+                tb_username.Text = next.Value.dbUserName;
+                tb_password.Text = next.Value.dbPassword;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private CloudEnv GetUIValue()
+        {
+            var uiEnv = new CloudEnv();
+
+            var cb_dbType = groupBox1.Controls.OfType<RadioButton>()
+                                     .FirstOrDefault(r => r.Checked);
+            var dbType = GetDBTypeByName(cb_dbType.Text);
+
+            var cb_dbHost = grp_host.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+            var dbHost = GetDBHostByName(cb_dbHost.Text);
+
+            uiEnv.dbType = dbType;
+            uiEnv.dbHost = dbHost;
+            uiEnv.dbPort = tb_dbPort.Text;
+            uiEnv.dbName = tb_dbName.Text;
+            uiEnv.dbUserName = tb_username.Text;
+            uiEnv.dbPassword = tb_password.Text;
+            uiEnv.envPath = tb_EnvPath.Text;
+
+            return uiEnv;
+        }
+        private DbType GetDBTypeByName(string controlText)
+        {
+            switch (controlText)
+            {
+                case "PG":
+                    return DbType.PgSQL;
+                case "SQL":
+                    return DbType.SQLServer;
+                case "ORACLE":
+                    return DbType.Oracle;
+                case "DM":
+                    return DbType.DM;
+                default:
+                    return DbType.PgSQL;
+            }
+        }
+        private string GetDBHostByName(string controlText)
+        {
+            if (controlText.Equals("其他"))
+            {
+                return tb_host.Text;
+            }
+            return controlText;
+        }
+
+        private void Button13_Click(object sender, EventArgs e)
+        {
+            var dbList = LoadNode(ConfNode.DBList) as JArray;
+            var confList = dbList.ToObject<List<CloudEnv>>().Cast<CloudEnv>();
+            var checkedButton = groupBox1.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+            var dbType = GetDBTypeByName(checkedButton.Text);
+            var cb_dbHost = grp_host.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+            var dbHost = GetDBHostByName(cb_dbHost.Text);
+
+            var list = from x in confList
+                       where x.dbHost == dbHost && x.dbPort == tb_dbPort.Text && x.dbType == dbType
+                       orderby x.dbName
+                       select x as CloudEnv;
+
+            var linked = new LinkedList<CloudEnv>(list);
+
+            try
+            {
+                var current = linked.First(x => x.dbName == tb_dbName.Text);
+
+                var next = linked.Find(current).Previous;
+                tb_dbName.Text = next.Value.dbName;
+                tb_username.Text = next.Value.dbUserName;
+                tb_password.Text = next.Value.dbPassword;
+            }
+            catch
+            {
+
+            }
+            
         }
     }
 }

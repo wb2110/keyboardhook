@@ -38,6 +38,7 @@ namespace WorkBench
             process1.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process1.StartInfo.FileName = cmd;
             process1.StartInfo.Arguments = param;
+            process1.EnableRaisingEvents = true;
             if (output != null)
             {
                 process1.OutputDataReceived += output;
@@ -59,15 +60,22 @@ namespace WorkBench
         {
             process1.Kill();
         }
-        public static void Execute(string cmd, string param, bool showWindow = false)
+        public static void Execute(string cmd, string param, bool showWindow = false, EventHandler exitCallBack =null)
         {
+            Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
                 FileName = cmd,
                 Arguments = param,
                 WindowStyle= showWindow? ProcessWindowStyle.Normal: ProcessWindowStyle.Hidden
             };
-            Process.Start(startInfo);
+            if (exitCallBack != null)
+            {
+                process.EnableRaisingEvents = true;
+                process.Exited += exitCallBack;
+            }
+            process.StartInfo = startInfo;
+            process.Start();
         }
 
         public static void OpenFolder(string path)
@@ -77,13 +85,14 @@ namespace WorkBench
             //process1.StartInfo.Arguments = path;
             //process1.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
             //process1.Start();
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                Arguments = path,
-                FileName = "explorer.exe"
-             };
+            //ProcessStartInfo startInfo = new ProcessStartInfo
+            //{
+            //    Arguments = path,
+            //    FileName = "explorer.exe"
+            // };
 
-             Process.Start(startInfo);
+            // Process.Start(startInfo);
+            Process.Start(path);
             
         }
 
