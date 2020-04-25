@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FDBD51E6-B0D7-4BF9-B43A-A66C81AE41EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataExport</RootNamespace>
+    <AssemblyName>DataExport</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v10.2">
+      <HintPath>lib\DevExpress.Data.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v10.2">
+      <HintPath>lib\DevExpress.Utils.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v10.2">
+      <HintPath>lib\DevExpress.XtraBars.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v10.2">
+      <HintPath>lib\DevExpress.XtraEditors.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v10.2">
+      <HintPath>lib\DevExpress.XtraGrid.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraLayout.v10.2">
+      <HintPath>lib\DevExpress.XtraLayout.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.AppFramework.Service">
+      <HintPath>lib\Genersoft.Platform.AppFramework.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.AppFramework.SPI">
+      <HintPath>lib\Genersoft.Platform.AppFramework.SPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.Caching">
+      <HintPath>lib\Genersoft.Platform.Core.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.Common">
+      <HintPath>lib\Genersoft.Platform.Core.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.DataAccess">
+      <HintPath>lib\Genersoft.Platform.Core.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.Error">
+      <HintPath>lib\Genersoft.Platform.Core.Error.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.Event">
+      <HintPath>lib\Genersoft.Platform.Core.Event.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.ExpressionEvaluation">
+      <HintPath>lib\Genersoft.Platform.Core.ExpressionEvaluation.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.ExpressionScriptEvaluation">
+      <HintPath>lib\Genersoft.Platform.Core.ExpressionScriptEvaluation.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.ExpressionSPI">
+      <HintPath>lib\Genersoft.Platform.Core.ExpressionSPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.Globalization">
+      <HintPath>lib\Genersoft.Platform.Core.Globalization.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.InterProcComm">
+      <HintPath>lib\Genersoft.Platform.Core.InterProcComm.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.Logging">
+      <HintPath>lib\Genersoft.Platform.Core.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.ObjectBuilder">
+      <HintPath>lib\Genersoft.Platform.Core.ObjectBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.Protobuf">
+      <HintPath>lib\Genersoft.Platform.Core.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.ServiceManager">
+      <HintPath>lib\Genersoft.Platform.Core.ServiceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.Session">
+      <HintPath>lib\Genersoft.Platform.Core.Session.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Core.Xml">
+      <HintPath>lib\Genersoft.Platform.Core.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.EnterpriseLibrary.Common">
+      <HintPath>lib\Genersoft.Platform.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.EnterpriseLibrary.Logging">
+      <HintPath>lib\Genersoft.Platform.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Performance.Service">
+      <HintPath>lib\Genersoft.Platform.Performance.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Performance.SPI">
+      <HintPath>lib\Genersoft.Platform.Performance.SPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.SemanticExpression">
+      <HintPath>lib\Genersoft.Platform.SemanticExpression.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.ServiceLocation">
+      <HintPath>lib\Genersoft.Platform.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Unity">
+      <HintPath>lib\Genersoft.Platform.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Unity.Configuration">
+      <HintPath>lib\Genersoft.Platform.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Genersoft.Platform.Unity.Interception">
+      <HintPath>lib\Genersoft.Platform.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Inspur.Gsp.Sys.ConfigData.Api">
+      <HintPath>lib\Inspur.Gsp.Sys.ConfigData.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Vsa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Microsoft.Vsa.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>lib\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>lib\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="Sybase.Data.AseClient">
+      <HintPath>lib\Sybase.Data.AseClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>lib\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe">
+      <HintPath>lib\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DboInfo.cs" />
+    <Compile Include="Demo.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDataFileType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataFileType.Designer.cs">
+      <DependentUpon>FormDataFileType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectData.Designer.cs">
+      <DependentUpon>FormSelectData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GSPDatabase.cs" />
+    <Compile Include="MessageResponseBroker.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResponsePresentation.cs" />
+    <Compile Include="TabDataFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TabDataFrm.Designer.cs">
+      <DependentUpon>TabDataFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TableAssociationInfo.cs" />
+    <Compile Include="TableAssociationUtil.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

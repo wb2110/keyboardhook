@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Genersoft.Platform.Core.ExpressionScriptEvaluation</name>
+    </assembly>
+    <members>
+        <member name="T:Genersoft.Platform.Core.ExpressionScriptEvaluation.EvaluationUtility">
+            <summary>
+            语义化表达式工具类。
+            </summary>
+        </member>
+        <member name="M:Genersoft.Platform.Core.ExpressionScriptEvaluation.EvaluationUtility.GetExpressionEntity(System.String)">
+            <summary>
+            根据指定的表达式文本生成其实体类。
+            </summary>
+            <param name="expression">表达式文本。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Genersoft.Platform.Core.ExpressionScriptEvaluation.GSPScriptEvaluator">
+            <summary>
+            语义化表达式解析器。注意：此类的实例只能在创建该实例的线程中使用。
+            </summary>
+        </member>
+        <member name="M:Genersoft.Platform.Core.ExpressionScriptEvaluation.GSPScriptEvaluator.AddObject(System.String,System.Object)">
+            <summary>
+            添加解析时用到的对象。
+            </summary>
+            <param name="name">对象实例名。</param>
+            <param name="obj">对象实例。</param>
+        </member>
+        <member name="M:Genersoft.Platform.Core.ExpressionScriptEvaluation.GSPScriptEvaluator.Evaluator(System.String,System.String)">
+            <summary>
+            对表达式进行求值。
+            </summary>
+            <param name="expression">表达式文本。</param>
+            <param name="dbType">此参数已不起作用。</param>
+            <returns>表达式的返回值。</returns>
+        </member>
+        <member name="M:Genersoft.Platform.Core.ExpressionScriptEvaluation.GSPScriptEvaluator.EvaluateBoolExpression(System.String)">
+            <summary>
+            对表达式进行求值，并试图将其返回值转换为布尔值。。
+            </summary>
+            <param name="expression">表达式文本。</param>
+            <returns>表达式的返回值。</returns>
+        </member>
+        <member name="M:Genersoft.Platform.Core.ExpressionScriptEvaluation.GSPScriptEvaluator.EvaluateExpressions(System.String,System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            批量计算，此方法仅提供给HR使用。
+            </summary>
+            <param name="tableColName">批量计算字段的三段式字段名。</param>
+            <param name="expression">表达式文本。</param>
+            <param name="primaryKeys">主表键值列表，此参数没有作用。</param>
+            <returns>批量计算字段所在的数据集。</returns>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionScriptEvaluation.GSPScriptEvaluator.EvaluatorDataSourceMode">
+            <summary>
+            获取或设置一个值，该值指示求值时使用的数据源。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionScriptEvaluation.GSPScriptEvaluator.RecordNotFindMode">
+            <summary>
+            获取或设置一个值，该值指示当要获取数据的行号不存在时，该返回何值。该属性的默认值为返回空字符串。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionScriptEvaluation.GSPScriptEvaluator.Data">
+            <summary>
+            获取或设置解析时用到的数据集字典。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionScriptEvaluation.GSPScriptEvaluator.DefaultVariablesMap">
+            <summary>
+            获取或设置解析时用到的变量字典。
+            </summary>
+            <remarks>
+            添加系统Session变量时，使用字符串“session”作为key，value是一个实现了 System.Collections.IDictionary 接口的对象。
+            “CurrentRowIndex”作为key时，表示添加一个特殊的上下文变量，其value值为System.Int32类型，表示获取字段默认时使用的行号。
+            </remarks>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionScriptEvaluation.GSPScriptEvaluator.Relations">
+            <summary>
+            获取或设置表示主从表关系的列表（此属性仅提供给HR使用，用于批量计算）。
+            </summary>
+        </member>
+        <member name="T:Genersoft.Platform.Core.ExpressionScriptEvaluation.Entity.ObjectRelation">
+            <summary>
+            批量计算时，表示主从表之间的关系。
+            </summary>
+        </member>
+        <member name="F:Genersoft.Platform.Core.ExpressionScriptEvaluation.Entity.ObjectRelation.IsReverse">
+            <summary>
+            此字段没有作用。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionScriptEvaluation.Entity.ObjectRelation.ChildCode">
+            <summary>
+            获取或设置从表表名。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionScriptEvaluation.Entity.ObjectRelation.ParentCode">
+            <summary>
+            获取或设置主表表名。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionScriptEvaluation.Entity.ObjectRelation.KeyMapping">
+            <summary>
+            获取或设置主从表的主键、外间对应关系。key:主表主键字段名； value:从表外键字段名。
+            </summary>
+        </member>
+    </members>
+</doc>

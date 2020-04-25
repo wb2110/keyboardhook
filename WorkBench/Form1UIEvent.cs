@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
+using WorkBench.DataBase;
 using WorkBench.Properties;
 
 namespace WorkBench
@@ -19,45 +21,45 @@ namespace WorkBench
                 if (e.KeyCode == Keys.LControlKey)
                 {
                     var interval = DateTime.Now - prevTime;
-                    if (interval.Milliseconds < 300 && interval.Milliseconds > 50)
+                    if (interval.Milliseconds < 250 && interval.Milliseconds > 50)
                     {
                         prevKey = Keys.None;
-                        ChageState();
+                        ChangeState();
                         return;
                     }
                 }
             }
             if (prevKey == Keys.LMenu)
             {
-                if (e.KeyCode == Keys.LMenu)
-                {
-                    var interval = DateTime.Now - prevTime;
-                    if (interval.Milliseconds < 300 && interval.Milliseconds > 50)
-                    {
-                        prevKey = Keys.None;
-                        Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
-                                         @"http://localhost:5000");
-                        return;
-                    }
-                }
+                //if (e.KeyCode == Keys.LMenu)
+                //{
+                //    var interval = DateTime.Now - prevTime;
+                //    if (interval.Milliseconds < 300 && interval.Milliseconds > 50)
+                //    {
+                //        prevKey = Keys.None;
+                //        Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+                //                         @"http://localhost:5000");
+                //        return;
+                //    }
+                //}
             }
             if (prevKey == Keys.LShiftKey)
             {
-                if (e.KeyCode == Keys.LShiftKey)
-                {
-                    var interval = DateTime.Now - prevTime;
-                    if (interval.Milliseconds < 300 && interval.Milliseconds > 50)
-                    {
-                        prevKey = Keys.None;
-                        Process.Start(@"D:\Program Files (x86)\Notepad++\NotePad++.exe");
-                        return;
-                    }
-                }
+                //if (e.KeyCode == Keys.LShiftKey)
+                //{
+                //    var interval = DateTime.Now - prevTime;
+                //    if (interval.Milliseconds < 300 && interval.Milliseconds > 50)
+                //    {
+                //        prevKey = Keys.None;
+                //        Process.Start(@"D:\Program Files (x86)\Notepad++\NotePad++.exe");
+                //        return;
+                //    }
+                //}
             }
             prevKey = e.KeyCode;
             prevTime = DateTime.Now;
         }
-        private void ChageState()
+        private void ChangeState()
         {
             if (this.Visible == false)
             {
@@ -86,7 +88,7 @@ namespace WorkBench
         {
             this.Hide();
             this.notifyIcon1.Visible = true;
-            this.notifyIcon1.ShowBalloonTip(500, "提示", "呵呵", ToolTipIcon.Info);
+            //this.notifyIcon1.ShowBalloonTip(500, "提示", "呵呵", ToolTipIcon.Info);
         }
         private void ShowNormal()
         {
@@ -108,33 +110,43 @@ namespace WorkBench
             {
                 pictureBox1.Image = img;
             }
-            try
+            var list = new List<string>();
+            new Thread(new ThreadStart(() =>
             {
-                FileAttributes attr = File.GetAttributes(clipboardText);
-                tb_clipBoard.Text = clipboardText;
-                tb_fileList.Clear();
-                foreach ( var item in Directory.GetDirectories(clipboardText))
+                try
                 {
-                    var path = Path.GetFileName(item);
-                    tb_fileList.AppendText(path);
-                    tb_fileList.AppendText("\n");
+                    FileAttributes attr = File.GetAttributes(clipboardText);
+                    tb_fileList.BeginInvoke(new Action(() =>
+                    {
+                        tb_clipBoard.Text = clipboardText;
+                        tb_fileList.Clear();
+                    }));
+                    foreach (var item in Directory.GetDirectories(clipboardText))
+                    {
+                        var path = Path.GetFileName(item);
+                        list.Add(path);
+                    }
+                    list.Add(Environment.NewLine);
+                    foreach (var item in Directory.GetFiles(clipboardText))
+                    {
+                        var file = Path.GetFileName(item);
+                        list.Add(file);
+                    }
+      
+                    tb_fileList.BeginInvoke(new Action(() =>
+                    {
+                        tb_fileList.AppendText(string.Join(Environment.NewLine, list));
+                    }));
+                    
+
                 }
-                tb_fileList.AppendText("\n");
-                foreach (var item in Directory.GetFiles(clipboardText))
+                catch
                 {
-                    var file = Path.GetFileName(item);
-                    tb_fileList.AppendText(file);
-                    tb_fileList.AppendText("\n");
+
                 }
 
-            }
-            catch
-            {
-
-            }
-            
-           
-
+                
+            })).Start();
         }
         private void SetNotifier()
         {
@@ -163,17 +175,24 @@ namespace WorkBench
 
         private void Rb_pg_CheckedChanged(object sender, EventArgs e)
         {
+            var rb = (RadioButton)sender;
+            if (rb.Checked == false)
+            {
+                return;
+            }
             env.dbType = DbType.PgSQL;
-            // env.dbPort = "5432";
-            // tb_dbPort.Text = "5432";
+            env.dbPort = "5432";
+            tb_dbPort.Text = "5432";
             SetDefaultValue();
-
-
-
         }
 
         private void Rb_sql_CheckedChanged(object sender, EventArgs e)
         {
+            var rb = (RadioButton)sender;
+            if (rb.Checked == false)
+            {
+                return;
+            }
             env.dbType = DbType.SQLServer;
             env.dbPort = "1433";
             tb_dbPort.Text = "1433";
@@ -182,6 +201,11 @@ namespace WorkBench
 
         private void Rb_dm_CheckedChanged(object sender, EventArgs e)
         {
+            var rb = (RadioButton)sender;
+            if (rb.Checked == false)
+            {
+                return;
+            }
             env.dbType = DbType.DM;
             env.dbPort = "5236";
             tb_dbPort.Text = "5236";
@@ -190,6 +214,11 @@ namespace WorkBench
 
         private void Rb_ora_CheckedChanged(object sender, EventArgs e)
         {
+            var rb = (RadioButton)sender;
+            if (rb.Checked == false)
+            {
+                return;
+            }
             env.dbType = DbType.Oracle;
             env.dbPort = "1521";
             tb_dbPort.Text = "1521";
@@ -198,6 +227,11 @@ namespace WorkBench
 
         private void Rb_21_CheckedChanged(object sender, EventArgs e)
         {
+            var rb = (RadioButton)sender;
+            if (rb.Checked == false)
+            {
+                return;
+            }
             panel_other.Visible = false;
             env.dbHost = "10.24.21.1";
             SetDefaultValue();
@@ -205,6 +239,11 @@ namespace WorkBench
 
         private void Rb_35_CheckedChanged(object sender, EventArgs e)
         {
+            var rb = (RadioButton)sender;
+            if (rb.Checked == false)
+            {
+                return;
+            }
             panel_other.Visible = false;
             env.dbHost = "10.24.21.35";
             SetDefaultValue();
@@ -212,6 +251,11 @@ namespace WorkBench
 
         private void Rb_localhost_CheckedChanged(object sender, EventArgs e)
         {
+            var rb = (RadioButton)sender;
+            if (rb.Checked == false)
+            {
+                return;
+            }
             panel_other.Visible = false;
             env.dbHost = "127.0.0.1";
             SetDefaultValue();
@@ -219,6 +263,11 @@ namespace WorkBench
 
         private void Rb_otherHost_CheckedChanged(object sender, EventArgs e)
         {
+            var rb = (RadioButton)sender;
+            if (rb.Checked == false)
+            {
+                return;
+            }
             panel_other.Visible = true;
             SetDefaultValue();
         }
@@ -262,41 +311,17 @@ namespace WorkBench
         }
         private void SetDefaultValue()
         {
-            var dbList = LoadNode(ConfNode.DBList) as JArray;
-
-            var confList = dbList.ToObject<List<CloudEnv>>().Cast<CloudEnv>();
-            var cb_dbType = groupBox1.Controls.OfType<RadioButton>()
-                                      .FirstOrDefault(r => r.Checked);
-            if (cb_dbType == null)
+            var temp=Dao.GetEnvByHostAndDbType(env.dbHost, Convert.ToInt32(env.dbType), ref dbindex);
+            if (temp == null)
             {
                 return;
             }
-            var dbType = GetDBTypeByName(cb_dbType.Text);
-
-            var cb_dbHost = grp_host.Controls.OfType<RadioButton>()
-                                      .FirstOrDefault(r => r.Checked);
-            if(cb_dbHost==null)
-            {
-                return;
-            }
-            var dbHost = GetDBHostByName(cb_dbHost.Text);
-
-            var random = (from x in confList
-                       where x.dbHost == dbHost && x.dbType == dbType
-                       orderby x.dbName
-                       select x as CloudEnv).FirstOrDefault();
-            if (random == null)
-            {
-                tb_dbName.Text = string.Empty;
-                tb_username.Text = string.Empty;
-                tb_password.Text = string.Empty;
-                return;
-            }
-
-            tb_dbName.Text = random.dbName;
-            tb_dbPort.Text = random.dbPort;
-            tb_username.Text = random.dbUserName;
-            tb_password.Text = random.dbPassword;
+            env = temp;
+            SetUIValue(env);
+            //tb_dbName.Text = random.dbName;
+            //tb_dbPort.Text = random.dbPort;
+            //tb_username.Text = random.dbUserName;
+            //tb_password.Text = random.dbPassword;
             
         }
     }

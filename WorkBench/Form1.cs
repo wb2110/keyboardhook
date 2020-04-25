@@ -1,4 +1,6 @@
-﻿using Gma.UserActivityMonitor;
+﻿using DataExport;
+using Genersoft.Platform.Core.DataAccess;
+using Gma.UserActivityMonitor;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -10,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using WorkBench.DataBase;
 using WorkBench.Properties;
 
 
@@ -18,65 +21,26 @@ namespace WorkBench
 
     public partial class Form1 : Form
     {
-        private Keys prevKey=Keys.None;
+        private Keys prevKey = Keys.None;
         private DateTime prevTime;
 
-        private CloudEnv env ;
-        private JObject jConfig;
+        private CloudEnv env;
         private string filePath = @"config.json";
-        private string redisPath = @"F:\GSPCLOUD\Redis\redis-cli.exe";
+        private string redisPath = @"redis-cli.exe";
 
-         public Form1()
+        public Form1()
         {
             InitializeComponent();
             SetNotifier();
+            Dao.CreateTable();
             HookManager.KeyDown += new KeyEventHandler(hook_KeyDown);
-            LoadConfig();
-            SetEnv(env);
+            LoadDefaultEnv();
         }
 
-        private void LoadConfig()
+        private void LoadDefaultEnv()
         {
-            JObject jobEnv;
-            if (File.Exists(filePath))
-            {
-                jConfig = JObject.Parse(File.ReadAllText(filePath));
-                jobEnv = jConfig[ConfNode.Env].ToObject<JObject>();
-                env = jobEnv.ToObject<CloudEnv>();
-                return;
-            }
-           
-            File.WriteAllText(filePath, GetDefaultConfig().ToString());
-        }
-        private void SaveNode(string nodeName, JToken node)
-        {
-            JObject config = JObject.Parse(File.ReadAllText(filePath));
-            config[nodeName] = node;
-            File.WriteAllText(filePath, config.ToString());
-        }
-        private JToken LoadNode(string nodeName)
-        {
-            JObject config = JObject.Parse(File.ReadAllText(filePath));
-            return config[nodeName];
-        }
-        private JToken GetDefaultConfig()
-        {
-            env = new CloudEnv();
-            env.envPath = @"E:\gsp+bf_cloud_1906_x86_64_build2019060502";
-            env.dbHost = @"10.24.21.1";
-            env.dbType = DbType.PgSQL;
-            env.dbName = "r3";
-            env.dbPassword = "Test6530";
-            env.dbUserName = "r3";
-            env.dbPort = "5432";
-            var config = new JObject();
-            var jobEnv = JObject.FromObject(env);
-            config[ConfNode.Env] = jobEnv;
-            return config;
-        }
-
-        private void SetEnv(CloudEnv env)
-        {
+            env = Dao.GetDefaultEnv();
+            var path = Environment.GetEnvironmentVariable("EnvPath");
             tb_EnvPath.Text = env.envPath;
             tb_dbName.Text = env.dbName;
             tb_username.Text = env.dbUserName;
@@ -84,7 +48,7 @@ namespace WorkBench
             tb_dbPort.Text = env.dbPort;
             SetRadioButton(env);
         }
-   
+
 
         private void Button2_Click(object sender, EventArgs e)
         {
@@ -101,32 +65,16 @@ namespace WorkBench
                 env.envPath = tb_EnvPath.Text;
                 SetEnvPath();
             }
-           
+
             RegisterDataBase();
-          
+
         }
 
-        private void AddDBList()
+        private void RemoveDB(CloudEnv env)
         {
-            var config = JObject.Parse(File.ReadAllText(filePath));
-            if (config.ContainsKey(ConfNode.DBList) == false)
-            {
-                var list = new JArray();
-                list.Add(JToken.FromObject(env));
-                //config[ConfNode.DBList] = list;
-                SaveNode(ConfNode.DBList, list);
-                return;
-            }
-            var dbList = config[ConfNode.DBList].ToObject<List<CloudEnv>>();
-            var find = dbList.Find(x => x.dbHost == env.dbHost && x.dbType == env.dbType && x.dbPort == env.dbPort && x.dbName == env.dbName);
-            if (find == null)
-            {
-                var arr = config[ConfNode.DBList] as JArray;
-                arr.Add(JToken.FromObject(env));
-                SaveNode(ConfNode.DBList, arr);
-            }
-           
+            Dao.DeleteEnv(env);
         }
+
 
         private void SetEnvPath()
         {
@@ -137,32 +85,31 @@ namespace WorkBench
         {
             var workDir = env.envPath + @"\tools\dbsetup\";
             var cmd = workDir + "start-win.cmd";
-            var cmdexecutor = new CmdExecutor(cmd,workDir,"");
+            var cmdexecutor = new CmdExecutor(cmd, workDir, "");
 
-            string dbType = ConvertDbType();
+            string dbType = GetRegistDbType();
             var lastLine = string.Empty;
-            cmdexecutor.Execute(new string[] { "2", dbType, env.dbHost, env.dbPort, env.dbName, env.dbUserName, env.dbPassword ,"n"},(sender,e)=> {
+            cmdexecutor.Execute(new string[] { "2", dbType, env.dbHost, env.dbPort, env.dbName, env.dbUserName, env.dbPassword, "n" }, (sender, e) => {
                 lastLine = e.Data;
                 if (e.Data != null)
                 {
-                   if (lastLine.Contains("注册成功"))
-                   {
-                        SaveNode(ConfNode.Env, JToken.FromObject(env));
-                        AddDBList();
+                    if (lastLine.Contains("注册成功"))
+                    {
+                        Dao.Save(env);
                     }
                     AppendTextBoxText(tb_output, e.Data);
                     AppendTextBoxText(tb_output, "\n");
                 }
-               
+
             }, (sender, e) => {
-                Console.WriteLine(lastLine);
+                AppendTextBoxText(tb_output, "命令执行完成");
             });
         }
         void AppendTextBoxText(TextBox tb, string text)
         {
             if (tb.InvokeRequired)
             {
-                tb.BeginInvoke(new Action(()=> {
+                tb.BeginInvoke(new Action(() => {
                     tb.AppendText(text);
                 }));
                 return;
@@ -178,23 +125,23 @@ namespace WorkBench
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            CmdExecutor.Execute("taskkill", "/f /im dotnet.exe",false,new EventHandler((s,ev)=> {
+            CmdExecutor.Execute("taskkill", "/f /im java.exe", false, new EventHandler((s, ev) => {
                 var workDir = env.envPath;
-                var cmd = workDir + @"\startup-win.cmd";
+                var cmd = workDir + @"\startup-jstack.cmd";
                 var cmdExe = new CmdExecutor(cmd, workDir, "");
                 cmdExe.Execute(true);
             }));
-            
+
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            CmdExecutor.Execute("taskkill", "/f /im dotnet.exe");
+            CmdExecutor.Execute("taskkill", "/f /im java.exe");
         }
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            CmdExecutor.Execute(redisPath, "flushall",true);
+            CmdExecutor.Execute(redisPath, "flushall", true);
         }
 
         private void Form1_DragDrop(object sender, DragEventArgs e)
@@ -246,7 +193,7 @@ namespace WorkBench
                                                     });
                 ;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -264,14 +211,14 @@ namespace WorkBench
                 var cmdexecutor = new CmdExecutor(cmd, workDir, "");
                 string lastLine;
 
-                string dbType = ConvertDbType();
+                string dbType = GetDeployDbType();
                 cmdexecutor.Execute(new string[] { tb_clipBoard.Text, env.envPath, dbType
-                                                    , env.dbHost,env.dbPort, env.dbName, env.dbUserName, env.dbPassword, "","n" }, (sender1, e1) => {
+                                                    , env.dbHost,env.dbPort, env.dbName, env.dbUserName, env.dbPassword, "","n" , Environment.NewLine}, (sender1, e1) => {
                                                         lastLine = e1.Data;
                                                         if (e1.Data != null)
                                                         {
                                                             AppendTextBoxText(tb_output, e1.Data);
-                                                            AppendTextBoxText(tb_output, "\n");
+                                                            AppendTextBoxText(tb_output, Environment.NewLine);
                                                         }
 
                                                     }, (sender1, e1) => {
@@ -283,7 +230,7 @@ namespace WorkBench
                 MessageBox.Show(ex.Message);
             }
         }
-        private string ConvertDbType()
+        private string GetDeployDbType()
         {
             string dbType = "1";
             if (env.dbType == DbType.PgSQL)
@@ -302,6 +249,66 @@ namespace WorkBench
             {
                 dbType = "4";
             }
+            else if (env.dbType == DbType.MySQL)
+            {
+                dbType = "5";
+            }
+            return dbType;
+        }
+        //获取注册数据库的数据库类型
+        private string GetRegistDbType(CloudEnv e = null)
+        {
+            var lenv = env;
+            if (e != null)
+            {
+                lenv = e;
+            }
+
+            string dbType = "0";
+            if (lenv.dbType == DbType.PgSQL)
+            {
+                dbType = "1";
+            }
+            else if (lenv.dbType == DbType.SQLServer)
+            {
+                dbType = "2";
+            }
+            else if (lenv.dbType == DbType.Oracle)
+            {
+                dbType = "3";
+            }
+            else if (lenv.dbType == DbType.DM)
+            {
+                dbType = "4";
+            }
+            else if (lenv.dbType == DbType.MySQL)
+            {
+                dbType = "0";
+            }
+            return dbType;
+        }
+        private String GetDataImportDBType(CloudEnv e) { 
+              string dbType = "0";
+            if (e.dbType == DbType.PgSQL)
+            {
+                dbType = "1";
+            }
+            else if (e.dbType == DbType.SQLServer)
+            {
+                dbType = "2";
+            }
+            else if (e.dbType == DbType.Oracle)
+            {
+                dbType = "3";
+            }
+            else if (e.dbType == DbType.DM)
+            {
+                dbType = "4";
+            }
+            else if (e.dbType == DbType.MySQL)
+            {
+                dbType = "0";
+            }
             return dbType;
         }
 
@@ -318,18 +325,33 @@ namespace WorkBench
                 var cmdexecutor = new CmdExecutor(cmd, workDir, "");
                 string lastLine;
 
-                string dbType = ConvertDbType();
-                cmdexecutor.Execute(new string[] {  dbType,env.dbHost,env.dbPort,env.dbName, env.dbUserName, env.dbPassword,tb_clipBoard.Text,"n","" }, (sender1, e1) => {
-                                                        lastLine = e1.Data;
-                                                        if (e1.Data != null)
-                                                        {
-                                                            AppendTextBoxText(tb_output, e1.Data);
-                                                            AppendTextBoxText(tb_output, "\n");
-                                                        }
+                string dbType = GetDataImportDBType(env);
+                var list = new List<string>();
+                list.Add(dbType);
+                list.Add(env.dbHost);
+                list.Add(env.dbPort);
+                list.Add(env.dbName);
+                list.Add(env.dbUserName);
+                list.Add(env.dbPassword);
+               
 
-                                                    }, (sender1, e1) => {
+                list.Add(Environment.NewLine);
+                list.Add(tb_clipBoard.Text);
+                list.Add("n");
+                list.Add(Environment.NewLine);
 
-                                                    });
+                cmdexecutor.Execute(list.ToArray(), (sender1, e1) => {
+                    lastLine = e1.Data;
+                    if (e1.Data != null)
+                    {
+                        AppendTextBoxText(tb_output, e1.Data);
+                        AppendTextBoxText(tb_output, Environment.NewLine);
+                    }
+
+                }, (sender1, e1) => {
+                    Console.WriteLine(e1);
+                });
+                Dao.Save(env);
             }
             catch (Exception ex)
             {
@@ -373,9 +395,9 @@ namespace WorkBench
                 var cmdExe = new CmdExecutor(cmd, workDir, "");
                 cmdExe.Execute(true);
             }));
-            
+
         }
-        private void GetAllAppFolder(List<string> paths,string path)
+        private void GetAllAppFolder(List<string> paths, string path)
         {
             foreach (var item in Directory.GetDirectories(path))
             {
@@ -476,12 +498,12 @@ namespace WorkBench
                 }
                 tb_left.Text = outtxt;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
-           
+
+
         }
 
         private void Btn_fmtRight_Click(object sender, EventArgs e)
@@ -515,12 +537,9 @@ namespace WorkBench
                 MessageBox.Show(ex.Message);
             }
         }
-
+        private int dbindex = 0;
         private void Button14_Click(object sender, EventArgs e)
         {
-            var dbList = LoadNode(ConfNode.DBList) as JArray;
-
-            var confList =dbList.ToObject<List<CloudEnv>>().Cast<CloudEnv>();
             var cb_dbType = groupBox1.Controls.OfType<RadioButton>()
                                       .FirstOrDefault(r => r.Checked);
             var dbType = GetDBTypeByName(cb_dbType.Text);
@@ -529,24 +548,10 @@ namespace WorkBench
                                       .FirstOrDefault(r => r.Checked);
             var dbHost = GetDBHostByName(cb_dbHost.Text);
 
-            var list = from x in confList
-                       where x.dbHost == dbHost && x.dbPort == tb_dbPort.Text && x.dbType == dbType
-                       orderby x.dbName
-                       select x as CloudEnv;
-            var linked = new LinkedList<CloudEnv>(list);
-
-            try
-            {
-                var current = linked.First(x => x.dbName == tb_dbName.Text);
-                var next = linked.Find(current).Next;
-                tb_dbName.Text = next.Value.dbName;
-                tb_username.Text = next.Value.dbUserName;
-                tb_password.Text = next.Value.dbPassword;
-            }
-            catch (Exception ex)
-            {
-
-            }
+            var next = Dao.GetEnvByHostAndDbType(env.dbHost, Convert.ToInt32(dbType),ref dbindex);
+            dbindex++;
+            
+            SetUIValue(next);
         }
         private CloudEnv GetUIValue()
         {
@@ -569,6 +574,33 @@ namespace WorkBench
             uiEnv.envPath = tb_EnvPath.Text;
 
             return uiEnv;
+        }
+        private void SetUIValue(CloudEnv env) {
+            tb_EnvPath.Text = env.envPath;
+            if (env.dbHost == "10.24.21.1")
+            {
+                rb_21.Checked = true;
+            }
+            else if (env.dbHost == "10.24.21.35")
+            {
+                rb_35.Checked = true;
+            }
+            else if (env.dbHost == "127.0.0.1")
+            {
+                rb_localhost.Checked = true;
+            }
+            else
+            {
+                tb_host.Text = env.dbHost;
+            }
+
+
+
+            tb_dbPort.Text = env.dbPort;
+            tb_username.Text = env.dbUserName;
+            tb_password.Text = env.dbPassword;
+            tb_dbName.Text = env.dbName;
+
         }
         private DbType GetDBTypeByName(string controlText)
         {
@@ -597,36 +629,272 @@ namespace WorkBench
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            var dbList = LoadNode(ConfNode.DBList) as JArray;
-            var confList = dbList.ToObject<List<CloudEnv>>().Cast<CloudEnv>();
-            var checkedButton = groupBox1.Controls.OfType<RadioButton>()
-                                      .FirstOrDefault(r => r.Checked);
-            var dbType = GetDBTypeByName(checkedButton.Text);
-            var cb_dbHost = grp_host.Controls.OfType<RadioButton>()
-                                      .FirstOrDefault(r => r.Checked);
-            var dbHost = GetDBHostByName(cb_dbHost.Text);
+           
 
-            var list = from x in confList
-                       where x.dbHost == dbHost && x.dbPort == tb_dbPort.Text && x.dbType == dbType
-                       orderby x.dbName
-                       select x as CloudEnv;
+        }
 
-            var linked = new LinkedList<CloudEnv>(list);
-
-            try
+        private void Btn_exportData_Click(object sender, EventArgs e)
+        {
+            var thread = new Thread(new ThreadStart(() =>
             {
-                var current = linked.First(x => x.dbName == tb_dbName.Text);
+                IGSPDatabase dataBase;
+                GSPDatabase gspdatabase = new GSPDatabase();
 
-                var next = linked.Find(current).Previous;
-                tb_dbName.Text = next.Value.dbName;
-                tb_username.Text = next.Value.dbUserName;
-                tb_password.Text = next.Value.dbPassword;
-            }
-            catch
+                var env = GetUIValue();
+                switch (env.dbType)
+                {
+                    case DbType.Oracle:
+                        dataBase = gspdatabase.GetOracleDatabase(env.dbHost, env.dbPort, env.dbName, env.dbUserName, env.dbPassword);
+                        break;
+                    case DbType.PgSQL:
+                        dataBase = gspdatabase.GetPostgreSQLDatabase(env.dbHost, env.dbPort, env.dbName, env.dbUserName, env.dbPassword);
+                        break;
+                    case DbType.SQLServer:
+                        dataBase = gspdatabase.GetSqlDatabase(env.dbHost, env.dbName, env.dbUserName, env.dbPassword);
+                        break;
+                    default:
+                        dataBase = gspdatabase.GetSqlDatabase(env.dbHost, env.dbName, env.dbUserName, env.dbPassword);
+                        break;
+                }
+
+                bool bOpened = true;
+                try
+                {
+                    dataBase.Open();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                    btn_exportData.BeginInvoke(new Action(() => {
+                        btn_exportData.Enabled = true;
+                    }));
+                    bOpened = false;
+
+                }
+                finally
+                {
+
+                }
+                if (bOpened)
+                {
+                    try
+                    {
+                        var exportForm = new TabDataFrm();
+                        exportForm.database = dataBase;
+                        exportForm.BindDbo();
+                        exportForm.Disposed += ExportForm_Disposed;
+                        //Application.Run(exportForm);
+                        exportForm.ShowDialog();
+                        ExportForm_Disposed(null, null);
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                        btn_exportData.BeginInvoke(new Action(() => {
+                            btn_exportData.Enabled = true;
+                        }));
+                    }
+
+                }
+
+            }));
+            thread.IsBackground = false;
+            thread.SetApartmentState(ApartmentState.STA); //重点
+            thread.Start();
+
+
+            btn_exportData.Enabled = false;
+
+
+        }
+
+        private void ExportForm_Disposed(object sender, EventArgs e)
+        {
+            btn_exportData.BeginInvoke(new Action(() => {
+                btn_exportData.Enabled = true;
+            }));
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            var keyCode = e.KeyCode.ToString();
+            if (e.KeyData == Keys.Escape)
             {
-
+                ChangeState();
             }
-            
+        }
+
+        //新建数据库实例
+        private void Button16_Click(object sender, EventArgs e)
+        {
+            env = GetUIValue();
+            Dao.Save(env);
+            //var workDir = env.envPath + @"\tools\dbsetup\";
+            //var cmd = workDir + "start-win.cmd";
+            //var cmdexecutor = new CmdExecutor(cmd, workDir, "");
+
+            //var env1 = GetUIValue();
+            //string dbType = GetRegistDbType(env1);
+            //var lastLine = string.Empty;
+            //cmdexecutor.Execute(new string[] { "1", dbType, env1.dbHost, env1.dbPort, env1.dbName, env1.dbUserName, env1.dbPassword, "n" }, (s, ev) => {
+            //    lastLine = ev.Data;
+            //    if (ev.Data != null)
+            //    {
+            //        if (lastLine.Contains("新建数据库实例成功"))
+            //        {
+            //            SaveNode(ConfNode.Env, JToken.FromObject(env1));
+            //            AddDBList();
+            //        }
+            //        AppendTextBoxText(tb_output, ev.Data);
+            //        AppendTextBoxText(tb_output, "\n");
+            //    }
+
+            //}, (s, ev) => {
+            //    AppendTextBoxText(tb_output, "命令执行完成");
+            //});
+        }
+        
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            var list = new List<string>();
+            list.Add(" ");
+            list.Add("!");
+            list.Add("\"");
+            list.Add("#");
+            list.Add("$");
+            list.Add("%");
+            list.Add("&");
+            list.Add("'");
+            list.Add("(");
+            list.Add(")");
+            list.Add("*");
+            list.Add("+");
+            list.Add(",");
+            list.Add("-");
+            list.Add(".");
+            list.Add("/");
+            list.Add(":");
+            list.Add(";");
+            list.Add("<");
+            list.Add("=");
+            list.Add(">");
+            list.Add("?");
+            list.Add("{");
+            list.Add("|");
+            list.Add("}");
+            list.Add("~");
+            list.Add("[");
+           // list.Add(@"\");
+            list.Add("]");
+            list.Add("^");
+            list.Add("_");
+            list.Add("@");
+            list.Add("`");
+            var list1 = new List<string>();
+            list1.Add(@"\x20");
+            list1.Add(@"\\x21");
+            list1.Add(@"\x22");
+            list1.Add(@"\x23");
+            list1.Add(@"\x24");
+            list1.Add(@"\x25");
+            list1.Add(@"\x26");
+            list1.Add(@"\x27");
+            list1.Add(@"\x28");
+            list1.Add(@"\x29");
+            list1.Add(@"\x2A");
+            list1.Add(@"\x2B");
+            list1.Add(@"\x2C");
+            list1.Add(@"\x2D");
+            list1.Add(@"\x2E");
+            list1.Add(@"\x2F");
+            list1.Add(@"\x3A");
+            list1.Add(@"\x3B");
+            list1.Add(@"\x3C");
+            list1.Add(@"\x3D");
+            list1.Add(@"\x3E");
+            list1.Add(@"\x3F");
+            list1.Add(@"\x7B");
+            list1.Add(@"\x7C");
+            list1.Add(@"\x7D");
+            list1.Add(@"\x7E");
+            list1.Add(@"\x5B");
+          //  list1.Add(@"\x5C");
+            list1.Add(@"\x5D");
+            list1.Add(@"\x5E");
+            list1.Add(@"\x5F");
+            list1.Add(@"\x40");
+            list1.Add(@"\x60");
+            var src = tb_left.Text;
+            for(var i=0;i<list.Count;++i)
+            {
+                src = src.Replace(list[i], list1[i]);
+            }
+            tb_right.Text = src;
+        }
+
+        private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            this.Dispose();
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            var env = GetUIValue();
+            RemoveDB(env);
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.Execute("taskkill", "/f /im dotnet.exe", false, new EventHandler((s, ev) => {
+                var workDir = env.envPath;
+                var cmd = workDir + @"\startup-nstack.cmd";
+                var cmdExe = new CmdExecutor(cmd, workDir, "");
+                cmdExe.Execute(true);
+            }));
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.Execute("taskkill", "/f /im dotnet.exe");
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"\\10.100.1.163\产品服务器\待测库\FI Cloud\CICD");
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            var param = @"D:\GO\BCCrack.bat";
+            CmdExecutor.Execute(param,"");
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"\\10.24.21.1\FIShare");
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"\\10.24.21.35\FIShare");
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"\\10.24.22.38\FIShare");
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"\\10.24.22.39\FIShare");
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"\\10.24.22.40\FIShare");
         }
     }
 }

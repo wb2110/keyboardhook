@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="gb2312"?>
+<data>
+  <!--以下面为例，当导出GSPBILLCODERULES时，关联导出GSP_R_MODEL_CODERULE和GSPCODERULECATEGORY，-->
+  <!-- GSPCODERULECATEGORY与GSPBILLCODERULES关联关系为GSPCODERULECATEGORY.ID=GSPBILLCODERULES.CATEGORYID，如果有多个关联关系，关联关系用逗号隔开-->
+  <tableAssociations>
+	<tableAssociation tableName="gspuser">
+      <Association tableName="gspuserextend" whereCondition="userid=id"/>
+    </tableAssociation>
+	<tableAssociation tableName="gspbusinessobject">
+      <Association tableName="gspauthorization" whereCondition="businessid=id"/>
+	  <Association tableName="gspoperation" whereCondition="businessid=id"/>
+    </tableAssociation>
+    <tableAssociation tableName="gspauthorization">
+        <Association tableName="gspauthorizationop" whereCondition="authorizationid=id"/>
+		<Association tableName="GSPAuthEntry" whereCondition="authorizationid=id"/>
+		<Association tableName="GSPAuthPermission" whereCondition="authorizationid=id"/>
+		<Association tableName="GSPAuthOpMap" whereCondition="authorizationId=id"/>
+		<Association tableName="gspauthfieldentry" whereCondition="authobjid=id"/>
+    </tableAssociation>
+	<tableAssociation tableName="GSPAuthEntry">
+        <Association tableName="gspauthfield" whereCondition="id=authfield"/>
+    </tableAssociation>
+	<tableAssociation tableName="gspauthfield">
+        <Association tableName="GSPAuthFieldGroup" whereCondition="authfield=id"/>
+		<Association tableName="gspAuthlogicobj" whereCondition="id=partitiontable"/>
+    </tableAssociation>	
+	<tableAssociation tableName="gspauthfieldentry">
+        <Association tableName="gspsecurityentry" whereCondition="id=entryid"/>
+    </tableAssociation>	
+	<tableAssociation tableName="gspsecurityentry">
+	    <Association tableName="gspoperationentry" whereCondition="entryid=id"/>
+        <Association tableName="gspauthoperationentry" whereCondition="entryid=id"/>
+    </tableAssociation>	
+  </tableAssociations>
+</data>

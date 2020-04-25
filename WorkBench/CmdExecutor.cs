@@ -47,14 +47,14 @@ namespace WorkBench
             {
                 process1.Exited += exitHandler;
             }
-            
+
             process1.Start();
             process1.BeginOutputReadLine();
-            foreach(var item in stdinParams)
+            foreach (var item in stdinParams)
             {
                 process1.StandardInput.WriteLine(item);
             }
-
+            process1.StandardInput.WriteLine(Environment.NewLine);
         }
         public void Kill()
         {

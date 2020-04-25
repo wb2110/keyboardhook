@@ -19,3 +19,9 @@ F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor
 F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csproj.CoreCompileInputs.cache
 F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
 F:\demo\test\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb
+F:\demo\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.xml
+F:\demo\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.dll
+F:\demo\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.pdb
+F:\demo\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csprojAssemblyReference.cache
+F:\demo\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
+F:\demo\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb

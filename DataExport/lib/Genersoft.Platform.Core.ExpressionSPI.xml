@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Genersoft.Platform.Core.ExpressionSPI</name>
+    </assembly>
+    <members>
+        <member name="T:Genersoft.Platform.Core.ExpressionSPI.ExecutiveType">
+            <summary>
+            表示表达式解析模式。
+            </summary>
+        </member>
+        <member name="F:Genersoft.Platform.Core.ExpressionSPI.ExecutiveType.MemoryMode">
+            <summary>
+            内存
+            </summary>
+        </member>
+        <member name="F:Genersoft.Platform.Core.ExpressionSPI.ExecutiveType.DataBase">
+            <summary>
+            数据库
+            </summary>
+        </member>
+        <member name="F:Genersoft.Platform.Core.ExpressionSPI.ExecutiveType.SQLServer">
+            <summary>
+             SqlServer
+             </summary>
+        </member>
+        <member name="F:Genersoft.Platform.Core.ExpressionSPI.ExecutiveType.OracleClient">
+            <summary>
+            oracle
+            </summary>
+        </member>
+        <member name="T:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity">
+            <summary>
+            语义化表达式实体类。
+            </summary>
+        </member>
+        <member name="M:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.GetExpr(Genersoft.Platform.Core.ExpressionSPI.ExecutiveType)">
+            <summary>
+            获取适用于指定解析模式的解析时文本。
+            </summary>
+            <param name="type">解析模式。</param>
+            <returns>与指定解析模式对应的解析时文本。</returns>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.ChExpr">
+            <summary>
+            获取内存中文表达式。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.EnExpr">
+            <summary>
+            获取内存英文表达式。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.MssChExpr">
+            <summary>
+            获取SQLServer数据库中文表达式。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.MssExpr">
+            <summary>
+            获取SQLServer数据库英文表达式。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.OraChExpr">
+            <summary>
+            获取Oracle数据库中文表达式。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.OraExpr">
+            <summary>
+            获取Oracle数据库英文表达式。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.FunctionNameList">
+            <summary>
+            获取表达式使用到的函数名称列表。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.InstanceNameList">
+            <summary>
+            获取表达式使用到的解析实例实例名称列表。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.FieldList">
+            <summary>
+            获取表达式使用到的字段列表（三段式英文字段名）。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.XpathFieldList">
+            <summary>
+            获取表达式使用到的字段的xpath列表。
+            </summary>
+        </member>
+        <member name="P:Genersoft.Platform.Core.ExpressionSPI.ExpressionEntity.HelpList">
+            <summary>
+            获取帮助信息列表。
+            </summary>
+        </member>
+        <member name="T:Genersoft.Platform.Core.ExpressionSPI.ExprBuilderParser">
+            <summary>
+            语义化表达式工具类。
+            </summary>
+        </member>
+        <member name="M:Genersoft.Platform.Core.ExpressionSPI.ExprBuilderParser.GetExprEntityByXml(System.String)">
+            <summary>
+            根据指定的表达式文本生成其实体类。
+            </summary>
+            <param name="expression">表达式文本。</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
