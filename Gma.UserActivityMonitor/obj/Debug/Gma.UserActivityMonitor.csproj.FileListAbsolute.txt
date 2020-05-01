@@ -25,3 +25,9 @@ F:\demo\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.pdb
 F:\demo\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csprojAssemblyReference.cache
 F:\demo\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
 F:\demo\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb
+H:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.xml
+H:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.dll
+H:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.pdb
+H:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csprojAssemblyReference.cache
+H:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
+H:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb

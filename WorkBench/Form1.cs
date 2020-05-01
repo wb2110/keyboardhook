@@ -813,16 +813,16 @@ namespace WorkBench
             list1.Add(@"\x3A");
             list1.Add(@"\x3B");
             list1.Add(@"\x3C");
-            list1.Add(@"\x3D");
+            list1.Add(@"=");   //=
             list1.Add(@"\x3E");
             list1.Add(@"\x3F");
             list1.Add(@"\x7B");
             list1.Add(@"\x7C");
             list1.Add(@"\x7D");
             list1.Add(@"\x7E");
-            list1.Add(@"\x5B");
-          //  list1.Add(@"\x5C");
-            list1.Add(@"\x5D");
+            list1.Add(@"\[");                   //list1.Add(@"\x5B");
+            //  list1.Add(@"\x5C");
+            list1.Add(@"\]");  //list1.Add(@"\x5D");
             list1.Add(@"\x5E");
             list1.Add(@"\x5F");
             list1.Add(@"\x40");
