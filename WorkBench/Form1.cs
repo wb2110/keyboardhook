@@ -213,7 +213,7 @@ namespace WorkBench
 
                 string dbType = GetDeployDbType();
                 cmdexecutor.Execute(new string[] { tb_clipBoard.Text, env.envPath, dbType
-                                                    , env.dbHost,env.dbPort, env.dbName, env.dbUserName, env.dbPassword, "","n" , Environment.NewLine}, (sender1, e1) => {
+                                                    , env.dbHost,env.dbPort, env.dbName, env.dbUserName, env.dbPassword, tb_year.Text,"n" , Environment.NewLine}, (sender1, e1) => {
                                                         lastLine = e1.Data;
                                                         if (e1.Data != null)
                                                         {

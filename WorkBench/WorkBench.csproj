@@ -99,6 +99,7 @@
     <Compile Include="DataBase\SQLiteColumnList.cs" />
     <Compile Include="DataBase\SQLiteHelper.cs" />
     <Compile Include="DataBase\SQLiteTable.cs" />
+    <Compile Include="Throttle.cs" />
     <Compile Include="TypeUtils.cs" />
     <Compile Include="Model\dbconf.cs" />
     <Compile Include="Model\dirconf.cs" />

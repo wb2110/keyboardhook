@@ -700,6 +700,7 @@
             this.tb_year.Name = "tb_year";
             this.tb_year.Size = new System.Drawing.Size(362, 32);
             this.tb_year.TabIndex = 6;
+            this.tb_year.Text = "2020,2021";
             // 
             // label8
             // 
