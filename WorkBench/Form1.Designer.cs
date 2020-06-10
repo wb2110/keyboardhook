@@ -37,6 +37,7 @@
             this.tb_fileList = new System.Windows.Forms.TextBox();
             this.button10 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.button27 = new System.Windows.Forms.Button();
             this.button26 = new System.Windows.Forms.Button();
             this.button25 = new System.Windows.Forms.Button();
             this.button24 = new System.Windows.Forms.Button();
@@ -170,7 +171,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(917, 827);
+            this.tabControl1.Size = new System.Drawing.Size(914, 920);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage4
@@ -184,13 +185,12 @@
             this.tabPage4.Controls.Add(this.panel2);
             this.tabPage4.Controls.Add(this.groupBox5);
             this.tabPage4.Controls.Add(this.tb_output);
-            this.tabPage4.Controls.Add(this.grp_host);
             this.tabPage4.Controls.Add(this.groupBox3);
             this.tabPage4.Controls.Add(this.groupBox2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(909, 801);
+            this.tabPage4.Size = new System.Drawing.Size(906, 894);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "环境";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -203,7 +203,7 @@
             this.tb_fileList.Multiline = true;
             this.tb_fileList.Name = "tb_fileList";
             this.tb_fileList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_fileList.Size = new System.Drawing.Size(424, 253);
+            this.tb_fileList.Size = new System.Drawing.Size(421, 253);
             this.tb_fileList.TabIndex = 11;
             this.tb_fileList.WordWrap = false;
             // 
@@ -211,7 +211,7 @@
             // 
             this.button10.Location = new System.Drawing.Point(682, 514);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(214, 50);
+            this.button10.Size = new System.Drawing.Size(193, 42);
             this.button10.TabIndex = 10;
             this.button10.Text = "快速部署";
             this.button10.UseVisualStyleBackColor = true;
@@ -219,6 +219,7 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.button27);
             this.groupBox6.Controls.Add(this.button26);
             this.groupBox6.Controls.Add(this.button25);
             this.groupBox6.Controls.Add(this.button24);
@@ -234,6 +235,16 @@
             this.groupBox6.TabIndex = 6;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "常用目录";
+            // 
+            // button27
+            // 
+            this.button27.Location = new System.Drawing.Point(340, 46);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(61, 28);
+            this.button27.TabIndex = 9;
+            this.button27.Text = "20.122";
+            this.button27.UseVisualStyleBackColor = true;
+            this.button27.Click += new System.EventHandler(this.button27_Click);
             // 
             // button26
             // 
@@ -329,7 +340,7 @@
             // 
             this.button9.Location = new System.Drawing.Point(474, 514);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(194, 50);
+            this.button9.Size = new System.Drawing.Size(193, 42);
             this.button9.TabIndex = 9;
             this.button9.Text = "部署工程";
             this.button9.UseVisualStyleBackColor = true;
@@ -339,7 +350,7 @@
             // 
             this.button8.Location = new System.Drawing.Point(681, 466);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(213, 42);
+            this.button8.Size = new System.Drawing.Size(193, 42);
             this.button8.TabIndex = 8;
             this.button8.Text = "导入data";
             this.button8.UseVisualStyleBackColor = true;
@@ -363,7 +374,7 @@
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(473, 158);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(428, 42);
+            this.panel2.Size = new System.Drawing.Size(425, 42);
             this.panel2.TabIndex = 6;
             // 
             // tb_clipBoard
@@ -373,7 +384,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_clipBoard.Location = new System.Drawing.Point(65, 11);
             this.tb_clipBoard.Name = "tb_clipBoard";
-            this.tb_clipBoard.Size = new System.Drawing.Size(338, 21);
+            this.tb_clipBoard.Size = new System.Drawing.Size(335, 21);
             this.tb_clipBoard.TabIndex = 6;
             // 
             // label1
@@ -471,7 +482,7 @@
             this.tb_output.Multiline = true;
             this.tb_output.Name = "tb_output";
             this.tb_output.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_output.Size = new System.Drawing.Size(898, 225);
+            this.tb_output.Size = new System.Drawing.Size(895, 318);
             this.tb_output.TabIndex = 4;
             // 
             // grp_host
@@ -482,9 +493,9 @@
             this.grp_host.Controls.Add(this.rb_otherHost);
             this.grp_host.Controls.Add(this.rb_35);
             this.grp_host.Controls.Add(this.rb_21);
-            this.grp_host.Location = new System.Drawing.Point(18, 107);
+            this.grp_host.Location = new System.Drawing.Point(9, 17);
             this.grp_host.Name = "grp_host";
-            this.grp_host.Size = new System.Drawing.Size(433, 80);
+            this.grp_host.Size = new System.Drawing.Size(419, 79);
             this.grp_host.TabIndex = 4;
             this.grp_host.TabStop = false;
             this.grp_host.Text = "主机";
@@ -494,9 +505,9 @@
             this.panel_other.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.panel_other.Controls.Add(this.label7);
             this.panel_other.Controls.Add(this.tb_host);
-            this.panel_other.Location = new System.Drawing.Point(184, 38);
+            this.panel_other.Location = new System.Drawing.Point(184, 42);
             this.panel_other.Name = "panel_other";
-            this.panel_other.Size = new System.Drawing.Size(246, 36);
+            this.panel_other.Size = new System.Drawing.Size(201, 31);
             this.panel_other.TabIndex = 4;
             this.panel_other.Visible = false;
             // 
@@ -506,7 +517,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 14);
+            this.label7.Location = new System.Drawing.Point(3, 7);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(17, 12);
             this.label7.TabIndex = 6;
@@ -514,11 +525,10 @@
             // 
             // tb_host
             // 
-            this.tb_host.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_host.Location = new System.Drawing.Point(42, 11);
+            this.tb_host.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_host.Location = new System.Drawing.Point(26, 3);
             this.tb_host.Name = "tb_host";
-            this.tb_host.Size = new System.Drawing.Size(168, 21);
+            this.tb_host.Size = new System.Drawing.Size(147, 21);
             this.tb_host.TabIndex = 4;
             // 
             // panel7
@@ -556,7 +566,7 @@
             // 
             this.rb_localhost.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.rb_localhost.AutoSize = true;
-            this.rb_localhost.Location = new System.Drawing.Point(226, 16);
+            this.rb_localhost.Location = new System.Drawing.Point(227, 15);
             this.rb_localhost.Name = "rb_localhost";
             this.rb_localhost.Size = new System.Drawing.Size(77, 16);
             this.rb_localhost.TabIndex = 2;
@@ -569,7 +579,7 @@
             // 
             this.rb_otherHost.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.rb_otherHost.AutoSize = true;
-            this.rb_otherHost.Location = new System.Drawing.Point(328, 16);
+            this.rb_otherHost.Location = new System.Drawing.Point(321, 15);
             this.rb_otherHost.Name = "rb_otherHost";
             this.rb_otherHost.Size = new System.Drawing.Size(47, 16);
             this.rb_otherHost.TabIndex = 3;
@@ -582,7 +592,7 @@
             // 
             this.rb_35.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.rb_35.AutoSize = true;
-            this.rb_35.Location = new System.Drawing.Point(111, 16);
+            this.rb_35.Location = new System.Drawing.Point(109, 15);
             this.rb_35.Name = "rb_35";
             this.rb_35.Size = new System.Drawing.Size(89, 16);
             this.rb_35.TabIndex = 1;
@@ -595,7 +605,7 @@
             // 
             this.rb_21.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.rb_21.AutoSize = true;
-            this.rb_21.Location = new System.Drawing.Point(9, 16);
+            this.rb_21.Location = new System.Drawing.Point(17, 15);
             this.rb_21.Name = "rb_21";
             this.rb_21.Size = new System.Drawing.Size(83, 16);
             this.rb_21.TabIndex = 0;
@@ -621,18 +631,18 @@
             this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.tb_EnvPath);
             this.panel3.Controls.Add(this.label2);
-            this.panel3.Location = new System.Drawing.Point(6, 20);
+            this.panel3.Location = new System.Drawing.Point(6, 13);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(434, 42);
+            this.panel3.Size = new System.Drawing.Size(434, 28);
             this.panel3.TabIndex = 1;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(366, 10);
+            this.button1.Location = new System.Drawing.Point(369, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(56, 23);
+            this.button1.Size = new System.Drawing.Size(56, 22);
             this.button1.TabIndex = 7;
             this.button1.Text = "浏览";
             this.button1.UseVisualStyleBackColor = true;
@@ -643,7 +653,7 @@
             this.tb_EnvPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_EnvPath.Location = new System.Drawing.Point(65, 11);
+            this.tb_EnvPath.Location = new System.Drawing.Point(65, 2);
             this.tb_EnvPath.Name = "tb_EnvPath";
             this.tb_EnvPath.Size = new System.Drawing.Size(302, 21);
             this.tb_EnvPath.TabIndex = 6;
@@ -653,7 +663,7 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 14);
+            this.label2.Location = new System.Drawing.Point(6, 7);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 5;
@@ -661,7 +671,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox2.Controls.Add(this.panel4);
             this.groupBox2.Controls.Add(this.button16);
             this.groupBox2.Controls.Add(this.btn_exportData);
@@ -671,11 +681,12 @@
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.groupBox1);
             this.groupBox2.Controls.Add(this.panel1);
+            this.groupBox2.Controls.Add(this.grp_host);
             this.groupBox2.Controls.Add(this.panel5);
             this.groupBox2.Controls.Add(this.panel6);
-            this.groupBox2.Location = new System.Drawing.Point(13, 86);
+            this.groupBox2.Location = new System.Drawing.Point(12, 88);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(446, 480);
+            this.groupBox2.Size = new System.Drawing.Size(448, 461);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "数据库";
@@ -685,9 +696,9 @@
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.Controls.Add(this.tb_year);
             this.panel4.Controls.Add(this.label8);
-            this.panel4.Location = new System.Drawing.Point(3, 152);
+            this.panel4.Location = new System.Drawing.Point(3, 142);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(431, 47);
+            this.panel4.Size = new System.Drawing.Size(435, 47);
             this.panel4.TabIndex = 7;
             // 
             // tb_year
@@ -698,7 +709,7 @@
             this.tb_year.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_year.Location = new System.Drawing.Point(61, 11);
             this.tb_year.Name = "tb_year";
-            this.tb_year.Size = new System.Drawing.Size(362, 32);
+            this.tb_year.Size = new System.Drawing.Size(366, 32);
             this.tb_year.TabIndex = 6;
             this.tb_year.Text = "2020,2021";
             // 
@@ -718,9 +729,9 @@
             // 
             this.button16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button16.Location = new System.Drawing.Point(21, 428);
+            this.button16.Location = new System.Drawing.Point(21, 416);
             this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(115, 45);
+            this.button16.Size = new System.Drawing.Size(113, 32);
             this.button16.TabIndex = 14;
             this.button16.Text = "保存";
             this.button16.UseVisualStyleBackColor = true;
@@ -730,9 +741,9 @@
             // 
             this.btn_exportData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_exportData.Location = new System.Drawing.Point(158, 428);
+            this.btn_exportData.Location = new System.Drawing.Point(158, 416);
             this.btn_exportData.Name = "btn_exportData";
-            this.btn_exportData.Size = new System.Drawing.Size(115, 45);
+            this.btn_exportData.Size = new System.Drawing.Size(113, 32);
             this.btn_exportData.TabIndex = 13;
             this.btn_exportData.Text = "导出数据";
             this.btn_exportData.UseVisualStyleBackColor = true;
@@ -740,9 +751,9 @@
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(21, 371);
+            this.button15.Location = new System.Drawing.Point(21, 378);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(115, 45);
+            this.button15.Size = new System.Drawing.Size(113, 32);
             this.button15.TabIndex = 12;
             this.button15.Text = "删除";
             this.button15.UseVisualStyleBackColor = true;
@@ -750,9 +761,9 @@
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(299, 371);
+            this.button14.Location = new System.Drawing.Point(299, 378);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(115, 45);
+            this.button14.Size = new System.Drawing.Size(113, 32);
             this.button14.TabIndex = 11;
             this.button14.Text = "下一个";
             this.button14.UseVisualStyleBackColor = true;
@@ -760,9 +771,9 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(158, 371);
+            this.button13.Location = new System.Drawing.Point(158, 378);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(115, 45);
+            this.button13.Size = new System.Drawing.Size(113, 32);
             this.button13.TabIndex = 10;
             this.button13.Text = "上一个";
             this.button13.UseVisualStyleBackColor = true;
@@ -772,9 +783,9 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(299, 428);
+            this.button2.Location = new System.Drawing.Point(299, 416);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(115, 45);
+            this.button2.Size = new System.Drawing.Size(113, 32);
             this.button2.TabIndex = 9;
             this.button2.Text = "注册数据库";
             this.button2.UseVisualStyleBackColor = true;
@@ -787,9 +798,9 @@
             this.groupBox1.Controls.Add(this.rb_ora);
             this.groupBox1.Controls.Add(this.rb_sql);
             this.groupBox1.Controls.Add(this.rb_pg);
-            this.groupBox1.Location = new System.Drawing.Point(6, 107);
+            this.groupBox1.Location = new System.Drawing.Point(6, 97);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(430, 52);
+            this.groupBox1.Size = new System.Drawing.Size(435, 52);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "类型";
@@ -799,7 +810,7 @@
             this.rb_dm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.rb_dm.AutoSize = true;
             this.rb_dm.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rb_dm.Location = new System.Drawing.Point(221, 15);
+            this.rb_dm.Location = new System.Drawing.Point(223, 15);
             this.rb_dm.Name = "rb_dm";
             this.rb_dm.Size = new System.Drawing.Size(50, 26);
             this.rb_dm.TabIndex = 3;
@@ -813,7 +824,7 @@
             this.rb_ora.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.rb_ora.AutoSize = true;
             this.rb_ora.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rb_ora.Location = new System.Drawing.Point(313, 15);
+            this.rb_ora.Location = new System.Drawing.Point(315, 15);
             this.rb_ora.Name = "rb_ora";
             this.rb_ora.Size = new System.Drawing.Size(94, 26);
             this.rb_ora.TabIndex = 2;
@@ -827,7 +838,7 @@
             this.rb_sql.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.rb_sql.AutoSize = true;
             this.rb_sql.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rb_sql.Location = new System.Drawing.Point(110, 15);
+            this.rb_sql.Location = new System.Drawing.Point(112, 15);
             this.rb_sql.Name = "rb_sql";
             this.rb_sql.Size = new System.Drawing.Size(61, 26);
             this.rb_sql.TabIndex = 1;
@@ -841,7 +852,7 @@
             this.rb_pg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.rb_pg.AutoSize = true;
             this.rb_pg.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rb_pg.Location = new System.Drawing.Point(9, 15);
+            this.rb_pg.Location = new System.Drawing.Point(31, 14);
             this.rb_pg.Name = "rb_pg";
             this.rb_pg.Size = new System.Drawing.Size(50, 26);
             this.rb_pg.TabIndex = 0;
@@ -855,9 +866,9 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.tb_password);
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Location = new System.Drawing.Point(3, 312);
+            this.panel1.Location = new System.Drawing.Point(3, 302);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(433, 47);
+            this.panel1.Size = new System.Drawing.Size(435, 47);
             this.panel1.TabIndex = 7;
             // 
             // tb_password
@@ -868,7 +879,7 @@
             this.tb_password.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_password.Location = new System.Drawing.Point(61, 11);
             this.tb_password.Name = "tb_password";
-            this.tb_password.Size = new System.Drawing.Size(362, 32);
+            this.tb_password.Size = new System.Drawing.Size(364, 32);
             this.tb_password.TabIndex = 8;
             // 
             // label6
@@ -888,9 +899,9 @@
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.panel5.Controls.Add(this.tb_dbName);
             this.panel5.Controls.Add(this.label4);
-            this.panel5.Location = new System.Drawing.Point(3, 205);
+            this.panel5.Location = new System.Drawing.Point(3, 195);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(431, 47);
+            this.panel5.Size = new System.Drawing.Size(435, 47);
             this.panel5.TabIndex = 1;
             // 
             // tb_dbName
@@ -901,7 +912,7 @@
             this.tb_dbName.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_dbName.Location = new System.Drawing.Point(61, 11);
             this.tb_dbName.Name = "tb_dbName";
-            this.tb_dbName.Size = new System.Drawing.Size(362, 32);
+            this.tb_dbName.Size = new System.Drawing.Size(366, 32);
             this.tb_dbName.TabIndex = 6;
             // 
             // label4
@@ -921,9 +932,9 @@
             this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.panel6.Controls.Add(this.tb_username);
             this.panel6.Controls.Add(this.label5);
-            this.panel6.Location = new System.Drawing.Point(3, 259);
+            this.panel6.Location = new System.Drawing.Point(3, 249);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(433, 47);
+            this.panel6.Size = new System.Drawing.Size(435, 47);
             this.panel6.TabIndex = 6;
             // 
             // tb_username
@@ -934,7 +945,7 @@
             this.tb_username.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_username.Location = new System.Drawing.Point(61, 8);
             this.tb_username.Name = "tb_username";
-            this.tb_username.Size = new System.Drawing.Size(362, 32);
+            this.tb_username.Size = new System.Drawing.Size(364, 32);
             this.tb_username.TabIndex = 7;
             // 
             // label5
@@ -1119,7 +1130,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(917, 827);
+            this.ClientSize = new System.Drawing.Size(914, 920);
             this.Controls.Add(this.tabControl1);
             this.KeyPreview = true;
             this.Name = "Form1";
@@ -1254,6 +1265,7 @@
         private System.Windows.Forms.Button button24;
         private System.Windows.Forms.Button button23;
         private System.Windows.Forms.Button button22;
+        private System.Windows.Forms.Button button27;
     }
 }
 

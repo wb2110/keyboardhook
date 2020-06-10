@@ -868,8 +868,8 @@ namespace WorkBench
 
         private void button21_Click(object sender, EventArgs e)
         {
-            var param = @"D:\GO\BCCrack.bat";
-            CmdExecutor.Execute(param,"");
+            var param = " /q";
+            CmdExecutor.Execute("cmd.exe", @"del %USERPROFILE%\AppData\Roaming\Scooter Software\Beyond Compare 4\*.*  /q");
         }
 
         private void button23_Click(object sender, EventArgs e)
@@ -896,5 +896,12 @@ namespace WorkBench
         {
             CmdExecutor.OpenFolder(@"\\10.24.22.40\FIShare");
         }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"\\10.24.20.122");
+        }
+
+
     }
 }
