@@ -31,3 +31,10 @@ H:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMon
 H:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csprojAssemblyReference.cache
 H:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
 H:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb
+F:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.xml
+F:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.dll
+F:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.pdb
+F:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csprojAssemblyReference.cache
+F:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
+F:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb
+F:\wolbo\winform\WorkBench\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csproj.CoreCompileInputs.cache

@@ -19,7 +19,7 @@ namespace WorkBench
         {
             var env = new CloudEnv();
             env.envPath = @"E:\gscloud";
-            env.dbHost = @"10.24.21.35";
+            env.dbHost = @"z.gscloud.top";
             env.dbType = DbType.PgSQL;
             env.dbName = "b4";
             env.dbPassword = "aaaaaa";

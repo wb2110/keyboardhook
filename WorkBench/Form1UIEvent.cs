@@ -249,8 +249,8 @@ namespace WorkBench
                 {
                     return;
                 }
-                panel_other.Visible = false;
-                env.dbHost = "10.24.21.1";
+               // panel_other.Visible = false;
+                env.dbHost = "x.gscloud.top";
                 SetDefaultValue();
             }
 
@@ -261,8 +261,8 @@ namespace WorkBench
                 {
                     return;
                 }
-                panel_other.Visible = false;
-                env.dbHost = "10.24.21.35";
+                //panel_other.Visible = false;
+                env.dbHost = "z.gscloud.top";
                 SetDefaultValue();
             }
 
@@ -273,7 +273,7 @@ namespace WorkBench
                 {
                     return;
                 }
-                panel_other.Visible = false;
+                //panel_other.Visible = false;
                 env.dbHost = "127.0.0.1";
                 SetDefaultValue();
             }
@@ -285,17 +285,17 @@ namespace WorkBench
                 {
                     return;
                 }
-                panel_other.Visible = true;
+              //  panel_other.Visible = true;
                 SetDefaultValue();
             }
             private void SetRadioButton(CloudEnv env)
             {
                 //dbHost
-                if (env.dbHost == "10.24.21.1")
+                if (env.dbHost == "x.gscloud.top")
                 {
                     rb_21.Select();
                 }
-                else if (env.dbHost == "10.24.21.35")
+                else if (env.dbHost == "z.gscloud.top")
                 {
                     rb_35.Select();
                 }
@@ -334,7 +334,7 @@ namespace WorkBench
                     return;
                 }
                 env = temp;
-                SetUIValue(env);
+           //     SetUIValue(env);
                 //tb_dbName.Text = random.dbName;
                 //tb_dbPort.Text = random.dbPort;
                 //tb_username.Text = random.dbUserName;

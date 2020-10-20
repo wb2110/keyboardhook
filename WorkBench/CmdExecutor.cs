@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Timers;
 
 namespace WorkBench
 {
@@ -42,6 +43,7 @@ namespace WorkBench
             if (output != null)
             {
                 process1.OutputDataReceived += output;
+                process1.ErrorDataReceived += output;
             }
             if (exitHandler != null)
             {
@@ -50,12 +52,26 @@ namespace WorkBench
 
             process1.Start();
             process1.BeginOutputReadLine();
+            //var timer = new Timer(3000);
+            //timer.AutoReset = true;
+            //timer.Elapsed += (sender,ev)=> {
+            //    foreach (var item in stdinParams)
+            //    {
+            //        process1.StandardInput.WriteLine(item);
+            //    }
+            //};
+            //timer.Start();
+
             foreach (var item in stdinParams)
             {
                 process1.StandardInput.WriteLine(item);
             }
-            process1.StandardInput.WriteLine(Environment.NewLine);
+
+            //    process1.StandardInput.WriteLine(Environment.NewLine);
         }
+
+
+
         public void Kill()
         {
             process1.Kill();

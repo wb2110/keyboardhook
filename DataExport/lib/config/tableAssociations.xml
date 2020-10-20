@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="gb2312"?>
 <data>
-  <!--以下面为例，当导出GSPBILLCODERULES时，关联导出GSP_R_MODEL_CODERULE和GSPCODERULECATEGORY，-->
-  <!-- GSPCODERULECATEGORY与GSPBILLCODERULES关联关系为GSPCODERULECATEGORY.ID=GSPBILLCODERULES.CATEGORYID，如果有多个关联关系，关联关系用逗号隔开-->
+  <tableImportStrategy>
+    <Strategy tableName="BFAdminDivision" protectCols="code,countryorregion,fullname_chs,fullname_cht,fullname_en,fullname_es,fullname_pt,iscity,issyspreset,name_chs,name_cht,name_en,name_es,name_pt,pnthrinfo_isdetail,pnthrinfo_layer,pnthrinfo_parentelement,pnthrinfo_sequence,remark,state_asyncdeletestatus,state_disabletime,state_isenabled,timestamp_createdby,timestamp_lastchangedby,timestamp_lastchangedon,timestamp_createdon,adminlevel,iscenter,zipcode,fastsearchsegment" />
+    <Strategy tableName="BFAdminOrgGroupType" protectCols="state_isenabled" />
+    <Strategy tableName="BFAssetSource" protectCols="state_isenabled" />
+    <Strategy tableName="BFAssetTreatmentType" protectCols="state_isenabled" />
+    <Strategy tableName="BFFuncTag" protectCols="state_isenabled" />
+    <Strategy tableName="BFBankType" protectCols="state_isenabled,sortorder" />
+    <Strategy tableName="BFCodeItems" protectCols="state_isenabled,sortorder,pnthrinfo_sequence" />
+    <Strategy tableName="BFContractType" protectCols="state_isenabled,pnthrinfo_sequence" />
+    <Strategy tableName="BFContractState" protectCols="sortorder" />
+    <Strategy tableName="BFMaterialTopLevelType" protectCols="state_isenabled" />
+    <Strategy tableName="BFMeasureUnit" protectCols="state_isenabled,sortorder" />
+    <Strategy tableName="BFNationalAndRegionalDict" protectCols="state_isenabled,code,issyspreset,name_chs,name_cht,name_en,name_es,name_pt,remark,state_asyncdeletestatus,state_disabletime,timestamp_createdby,timestamp_createdon,timestamp_lastchangedby,timestamp_lastchangedon,sortorder,addresscombipattern,manageadmindivision,maincurrency" />
+    <Strategy tableName="BFPaymentMode" protectCols="state_isenabled" />
+    <Strategy tableName="BFPaymentTerm" protectCols="state_isenabled" />
+    <Strategy tableName="BFProjectState" protectCols="state_isenabled,sortorder" />
+    <Strategy tableName="BFTaxSystem" protectCols="state_isenabled,sortorder" />
+    <Strategy tableName="BFTaxType" protectCols="state_isenabled,sortorder" />
+    <Strategy tableName="BFTradeTerms" protectCols="state_isenabled" />
+    <Strategy tableName="BFTransportFacility" protectCols="state_isenabled" />
+    <Strategy tableName="BFTransportMode" protectCols="state_isenabled" />
+    <Strategy tableName="BFTypeOfGoodsDict" protectCols="state_isenabled" />
+    <Strategy tableName="BFTypeOfProjectState" protectCols="state_isenabled" />
+    <Strategy tableName="BFTypeOfProjectType" protectCols="state_isenabled" />
+    <Strategy tableName="BFTransportation" protectCols="state_isenabled" />
+    <Strategy tableName="BFSeatInfo" protectCols="state_isenabled,seatnumber,seatlevel" />
+	<Strategy tableName="BFBFEventConfig" protectCols="state_isenabled,steporder" />
+	<Strategy tableName="BFBFAppDefine" protectCols="addpermission,deletepermission,editpermission" />
+
+    <Strategy tableName="ecpdbconnection" protectCols="connectionstring,dbtype" />
+	<Strategy tableName="GSPAuthEntry" protectCols="state,ctrlobj" />
+	<Strategy tableName="gspauthfield" protectCols="auDataControl" />
+	<Strategy tableName="gspfunc" protectCols="tenantid" />
+	<Strategy tableName="gspapp" protectCols="tenantid" />
+	<Strategy tableName="gspappinvoke" protectCols="tenantid" />
+  </tableImportStrategy>
+
   <tableAssociations>
 	<tableAssociation tableName="gspuser">
       <Association tableName="gspuserextend" whereCondition="userid=id"/>

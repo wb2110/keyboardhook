@@ -49,7 +49,7 @@ namespace WorkBench
             SetRadioButton(env);
         }
 
-
+        //注册数据库
         private void Button2_Click(object sender, EventArgs e)
         {
             if (rb_otherHost.Checked)
@@ -89,7 +89,7 @@ namespace WorkBench
 
             string dbType = GetRegistDbType();
             var lastLine = string.Empty;
-            cmdexecutor.Execute(new string[] { "2", dbType, env.dbHost, env.dbPort, env.dbName, env.dbUserName, env.dbPassword, "n" }, (sender, e) => {
+            cmdexecutor.Execute(new string[] { "3", dbType, env.dbHost, env.dbPort, env.dbName, env.dbUserName, env.dbPassword, "n" }, (sender, e) => {
                 lastLine = e.Data;
                 if (e.Data != null)
                 {
@@ -141,6 +141,7 @@ namespace WorkBench
 
         private void Button6_Click(object sender, EventArgs e)
         {
+            var redisPath = Environment.GetEnvironmentVariable("RedisExe");
             CmdExecutor.Execute(redisPath, "flushall", true);
         }
 
@@ -198,7 +199,7 @@ namespace WorkBench
                 MessageBox.Show(ex.Message);
             }
         }
-
+        //部署dbo
         private void Button7_Click(object sender, EventArgs e)
         {
             try
@@ -206,8 +207,8 @@ namespace WorkBench
                 FileAttributes attr = File.GetAttributes(tb_clipBoard.Text);
                 var env = GetUIValue();
 
-                var workDir = env.envPath + @"\tools\dbotool\";
-                var cmd = workDir + "dbodeploy-win.cmd";
+                var workDir = env.envPath + @"\tools\dbodeploy_java\";
+                var cmd = workDir + "dbo-deploy-win.cmd";
                 var cmdexecutor = new CmdExecutor(cmd, workDir, "");
                 string lastLine;
 
@@ -311,7 +312,8 @@ namespace WorkBench
             }
             return dbType;
         }
-
+        
+        //导入data
         private void Button8_Click(object sender, EventArgs e)
         {
             try
@@ -320,9 +322,9 @@ namespace WorkBench
 
                 var env = GetUIValue();
 
-                var workDir = env.envPath + @"\tools\dataimport\";
+                var workDir = env.envPath + @"\tools\dataimport_java\";
                 var cmd = workDir + "dataimport-win.cmd";
-                var cmdexecutor = new CmdExecutor(cmd, workDir, "");
+                var cmdexecutor = new CmdExecutor(cmd, workDir, null);
                 string lastLine;
 
                 string dbType = GetDataImportDBType(env);
@@ -330,14 +332,14 @@ namespace WorkBench
                 list.Add(dbType);
                 list.Add(env.dbHost);
                 list.Add(env.dbPort);
-                list.Add(env.dbName);
+                if (dbType != "4") {
+                    list.Add(env.dbName);
+                }
+                
                 list.Add(env.dbUserName);
                 list.Add(env.dbPassword);
-               
-
-                list.Add(Environment.NewLine);
+                list.Add(tb_year.Text);
                 list.Add(tb_clipBoard.Text);
-                list.Add("n");
                 list.Add(Environment.NewLine);
 
                 cmdexecutor.Execute(list.ToArray(), (sender1, e1) => {
@@ -577,11 +579,11 @@ namespace WorkBench
         }
         private void SetUIValue(CloudEnv env) {
             tb_EnvPath.Text = env.envPath;
-            if (env.dbHost == "10.24.21.1")
+            if (env.dbHost == "x.gscloud.top")
             {
                 rb_21.Checked = true;
             }
-            else if (env.dbHost == "10.24.21.35")
+            else if (env.dbHost == "z.gscloud.top")
             {
                 rb_35.Checked = true;
             }
@@ -874,34 +876,42 @@ namespace WorkBench
 
         private void button23_Click(object sender, EventArgs e)
         {
-            CmdExecutor.OpenFolder(@"\\10.24.21.1\FIShare");
+            CmdExecutor.OpenFolder(@"\\x.gscloud.top");
         }
 
         private void button24_Click(object sender, EventArgs e)
         {
-            CmdExecutor.OpenFolder(@"\\10.24.21.35\FIShare");
+            CmdExecutor.OpenFolder(@"\\y.gscloud.top");
         }
 
         private void button22_Click(object sender, EventArgs e)
         {
-            CmdExecutor.OpenFolder(@"\\10.24.22.38\FIShare");
+            CmdExecutor.OpenFolder(@"\\a.gscloud.top");
         }
 
         private void button25_Click(object sender, EventArgs e)
         {
-            CmdExecutor.OpenFolder(@"\\10.24.22.39\FIShare");
+            CmdExecutor.OpenFolder(@"\\b.gscloud.top");
         }
 
         private void button26_Click(object sender, EventArgs e)
         {
-            CmdExecutor.OpenFolder(@"\\10.24.22.40\FIShare");
+            CmdExecutor.OpenFolder(@"\\c.gscloud.top");
         }
 
         private void button27_Click(object sender, EventArgs e)
         {
-            CmdExecutor.OpenFolder(@"\\10.24.20.122");
+            CmdExecutor.OpenFolder(@"\\10.110.85.184");
         }
 
+        private void button28_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"\\z.gscloud.top");
+        }
 
+        private void button29_Click(object sender, EventArgs e)
+        {
+            CmdExecutor.OpenFolder(@"\\d.gscloud.top");
+        }
     }
 }
